@@ -1,5 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View, Picker } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Picker
+} from 'react-native';
 
 const Input = props => {
   let template = null;
@@ -17,14 +24,33 @@ const Input = props => {
 
 const styles = StyleSheet.create({
   input: {
-    width: '100%',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eaeaea',
-    // backgroundColor: '#F5FCFF',
-    fontSize: 16,
-
-    marginTop: 10,
-    // pointerColor: 'blue'
+    ...Platform.select({
+      android: {
+        width: '90%',
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#21A0DC',
+        // backgroundColor: '#F5FCFF',
+        fontSize: 20,
+        marginTop: 10,
+        marginRight: 20,
+        marginLeft: 20,
+        marginBottom: 20,
+        paddingBottom: 7
+      },
+      ios: {
+        width: '80%',
+        borderBottomWidth: 0.5,
+        borderBottomColor: '#21A0DC',
+        // backgroundColor: '#F5FCFF',
+        fontSize: 18,
+        marginTop: 16,
+        marginRight: 20,
+        marginLeft: 20,
+        marginBottom: 20,
+        paddingBottom: 10
+        // pointerColor: 'blue'
+      }
+    })
   }
 });
 export default Input;
