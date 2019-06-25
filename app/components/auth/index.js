@@ -16,6 +16,10 @@ class AuthComponent extends Component {
   state = {
     loading: false
   };
+
+  goNext = () => {
+    this.props.navigation.navigate('App');
+  };
   render() {
     if (this.state.loading) {
       return (
@@ -28,15 +32,10 @@ class AuthComponent extends Component {
         <ScrollView style={styles.container}>
           <View>
             <AuthLogo />
-            <AuthForm />
+            <AuthForm goNext={this.goNext}/>
           </View>
         </ScrollView>
       );
-
-      // <Button
-      //   title="go"
-      //   onPress={() => this.props.navigation.navigate('App')}
-      // />
     }
   }
 }
