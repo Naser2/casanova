@@ -8,6 +8,8 @@ import {
   Platform
 } from 'react-native';
 import Input from '../../utils/forms/Input';
+import ValidationRules from '../../utils/forms/ValidationRules';
+// import console = require('console');
 
 class AuthForm extends Component {
   state = {
@@ -50,19 +52,33 @@ class AuthForm extends Component {
 
   updateInput = (name, value) => {
     this.setState({
-      hasErrors: true
+      hasErrors: false
     });
     let formCopy = this.state.form;
-    formCopy[name].value = value;
+    formCopy[name].value = value; // copy the form & set update the value of each input
+    console.log(formCopy[name].value);
 
+    let rules = formCopy[name].rules; //grab the rules of adequate name
+    let valid = ValidationRules(value, rules, formCopy); // returns a  boolean
+    // set the validity of the name of form state to what is returned by ValidationRules
+    formCopy[name].valid = valid;
     this.setState({
       form: formCopy
     });
+    // if (formCopy[name].valid !== valid) {
+    //   this.setState({
+    //     hasErrors: true
+    //   });
+    // } else {
+    //   this.setState({
+    //     form: formCopy
+    //   });
+    // }
   };
 
   formHasErrors = () => {
     // alert('hello ');
-    if (this.state.hasErrors) {
+    if (this.state.hasErrors === true) {
       return (
         <View style={styles.errorContainer}>
           <Text style={styles.errorLabel}>Ooops somethings went wrong</Text>
@@ -87,6 +103,7 @@ class AuthForm extends Component {
       return null;
     }
   };
+
   changeFormType = () => {
     const type = this.state.type;
     this.setState({
@@ -95,6 +112,45 @@ class AuthForm extends Component {
       actionMode: type === 'Login' ? 'I want to Login' : 'I want to register'
     });
   };
+
+  submitUser = () => {
+    let type = this.state.type;
+    let isFormValid = true;
+    let formToSubmit = {};
+    let formCopy = this.state.form;
+
+    for (let key in formCopy) {
+      if (type === 'Login') {
+        // LOGIN
+        if (key !== 'confirmPassword') {
+          isFormValid = isFormValid && formCopy[key].valid;
+          formToSubmit = formCopy[key].value;
+        }
+      } else {
+        //REGISTER
+        isFormValid = isFormValid && formCopy[key].valid;
+        formToSubmit[key] = formCopy[key].value;
+      }
+      if(key ==='Register'){
+        isFormValid = isFormValid && formCopy[key].valid // check temp bool against state value 
+        formToSubmit[key] = formCopy[key].value // add the datato the form to submit 
+      }
+    }
+
+
+    if (isFormValid) {
+      if (type === 'Login') {
+        //submit Login
+      } else {
+        //submit register
+       
+    } else {
+      this.setState({
+        hasErrors: true
+      });
+    }
+  };
+
   render() {
     return (
       <View>
@@ -123,7 +179,7 @@ class AuthForm extends Component {
           <View style={{ marginTop: 7 }}>
             <TouchableOpacity
               style={styles.submitBtnAttr}
-              onPress={() => navigate('HomeScreen')}
+              onPress={this.submitUser}
               underlayColor="#fff"
             >
               <Text style={styles.loginText}>{this.state.action}</Text>
@@ -174,7 +230,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'red',
     marginBottom: 10,
-    marginTop: 30,
+    marginTop: 10,
     padding: 10
   },
   errorLabel: {
@@ -209,17 +265,6 @@ const styles = StyleSheet.create({
         borderColor: '#1A73E8'
       }
     })
-    // marginRight: 40,
-    // marginLeft: 40,
-    // marginBottom: 10,
-    // marginTop: 0,
-    // paddingTop: 7,
-    // paddingBottom: 7,
-    // backgroundColor: '#1A73E8',
-    // borderRadius: 3,
-    // borderWidth: 3,
-    // borderColor: '#1A73E8'
-    // backgroundColor: '#2196F3'
   },
   loginText: {
     color: '#fff',
