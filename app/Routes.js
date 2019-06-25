@@ -21,7 +21,7 @@ const AuthStack = createStackNavigator(
 );
 const AppStack = createBottomTabNavigator({
   Feed: Feed,
-  CasanovaSettings: CasanovaSettings
+  Settings: CasanovaSettings
 });
 export const RoutesNavigator = () => {
   return createAppContainer(
