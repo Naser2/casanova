@@ -8,9 +8,12 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import RoutesNavigator from './Routes';
-
+// import { YellowBox } from 'react-native';
 class App extends Component {
+
   render() {
+    // YellowBox.ignoreWarnings(['Remote debugger']);
+    // console.ignoredYellowBox = ['APP INDEX Remote debugger'];
     const Nav = RoutesNavigator();
     return (
       <View style={styles.container}>
