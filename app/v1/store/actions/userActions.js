@@ -41,10 +41,10 @@ export const signIn = data => dispatch => {
 
   // console.log('REQUEST signUP: ', request);
 
-  dispatch({
-    type: SIGN_IN,
-    payload: request
-  });
+  // dispatch({
+  //   type: SIGN_IN,
+  //   payload: request
+  // });
 };
 // export const signIn = () =>  async dispatch => {
 //   console.log('SIGN IN FUNC:', dispatch);
